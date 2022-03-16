@@ -14,7 +14,6 @@ function upTime(){
     const seconds = date.getSeconds();
 
     var currentTime= `${hour} : ${minute} : ${seconds} `
-    console.log(currentTime)
     currentT.innerHTML=currentTime;
 }
 

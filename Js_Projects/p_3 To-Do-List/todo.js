@@ -13,6 +13,9 @@ let addListDom=document.querySelector("#list")
 
 
 getFromLocal()
+
+
+
 //adding eventlisteners to li elements
 
 function eventlistadder(){ 
@@ -36,6 +39,7 @@ function eventlistadder(){
 }
 
 eventlistadder()
+
 
 // call respond to newElement
 function newElement(e){
@@ -73,6 +77,7 @@ function liSelected(){
 //delete function
 function liDelete(){
     this.parentNode.remove()
+    localStorage.removeItem(this.parentNode.id)
 }
 
 function saveToLocal(){
@@ -80,7 +85,7 @@ function saveToLocal(){
     for (let i=0;i<innerItems.length;i++){
         let keyId=innerItems[i].id
         let IValue=innerItems[i].textContent
-        
+
         IValue=IValue.replaceAll('\n','') // problem here
 
         localStorage.setItem(`${keyId}`,`{"li_id":"${keyId}","li_value":"${IValue}"}`)
@@ -94,7 +99,15 @@ function getFromLocal(){
     for(let i=0;i<noItemLocal;i++){
         let initPars=JSON.parse(localStorage.getItem(`li_id${i.toString()}`))
         let initLi=document.createElement("li");
-        initLi.textContent=initPars.li_value;
+        try{
+            initLi.textContent=initPars.li_value;
+        }
+        catch(e){
+            console.log("null element problem..")
+            continue
+        }
+
         addListDom.appendChild(initLi);
+        eventlistadder()
     }
 }

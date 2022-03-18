@@ -80,18 +80,28 @@ function liDelete(){
     localStorage.removeItem(this.parentNode.id)
 }
 
+//to save local storage
 function saveToLocal(){
     let innerItems=document.querySelectorAll("#list>li") 
     for (let i=0;i<innerItems.length;i++){
         let keyId=innerItems[i].id
         let IValue=innerItems[i].textContent
 
+        function obforloc(li_id,li_value){
+            this.li_id=li_id;
+            this.li_value=li_value;
+        }
         IValue=IValue.replaceAll('\n','') // problem here
+        let taskObj=new obforloc(keyId,IValue);
+        console.log(taskObj.li_id)
+        
 
-        localStorage.setItem(`${keyId}`,`{"li_id":"${keyId}","li_value":"${IValue}"}`)
+        //localStorage.setItem(`${keyId}`,`{"li_id":"${keyId}","li_value":"${IValue}"}`)
+        localStorage.setItem(`li_id${i.toString()}`,JSON.stringify(taskObj))
     }
 }
 
+//receive data from local storage
 function getFromLocal(){
     
     let noItemLocal= localStorage.length;

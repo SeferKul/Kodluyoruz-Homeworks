@@ -81,3 +81,91 @@ const menu = [
     desc: `Red bean paste dessert, serving with honey.`,
   },
 ];
+
+let btnContainer=document.querySelector("#btn-container")
+
+let itemContainer=document.querySelector("#item-container")
+
+//creting buttons
+let allBut    = document.createElement("button");
+let koreaBut  = document.createElement("button");
+let japanBut  = document.createElement("button");
+let chinaBut  = document.createElement("button");
+
+//button classes and innerhtml added
+allBut.className="btn-item";
+allBut.id="AllBtn"
+allBut.innerHTML="All"
+
+koreaBut.className="btn-item";
+koreaBut.id="KoreaBtn"
+koreaBut.value="Korea"
+koreaBut.innerHTML="Korea"
+
+japanBut.className="btn-item";
+japanBut.id="JapanBtn"
+japanBut.value="Japan"
+japanBut.innerHTML="Japan"
+
+
+chinaBut.className="btn-item";
+chinaBut.id="ChinaBtn"
+chinaBut.value="China"
+chinaBut.innerHTML="China"
+
+//eventlisteners added
+allBut.addEventListener("click", itemRender)
+koreaBut.addEventListener("click", itemRender)
+japanBut.addEventListener("click", itemRender)
+chinaBut.addEventListener("click", itemRender)
+
+// buttons appended 
+btnContainer.appendChild(allBut);
+btnContainer.appendChild(koreaBut);
+btnContainer.appendChild(japanBut);
+btnContainer.appendChild(chinaBut);
+
+//get the data from obj
+
+// return a array of objects
+function filtFunc(categoryName="All",menuName=menu){  
+  if (categoryName !== "All"){  //filter by category
+
+    return objList = menuName.filter((item)=>{  
+
+      if (item.category==categoryName.toString()){
+        return item; 
+
+      }
+    });
+  }//default bring all
+  else{
+    
+    return objList=menuName
+  }
+  
+}
+
+function itemRender(){
+  while (itemContainer.firstChild) {                      //clear all the childs for each filter call
+    itemContainer.removeChild(itemContainer.firstChild);
+}
+  cN= this.innerHTML;  //get category name
+  
+  console.log(categoryName=cN)
+
+  itemList=filtFunc(categoryName=cN)
+  
+
+  for(let i=0; i<itemList.length; i++){
+
+    let singleItem = document.createElement("div");
+    singleItem.classList.add("menu-items")
+    singleItem.innerHTML=`
+    <img class="photo" src="${itemList[i].img}" alt="${itemList[i].title}"><div class=menu-info>
+    <h4 class="menu-title">${itemList[i].title}<span>${itemList[i].price}</span></h4>
+    <p class="menu-text">${itemList[i].desc}</p></div>`
+    itemContainer.appendChild(singleItem)
+    
+  }    
+}
